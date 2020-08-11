@@ -8,7 +8,7 @@ resolution: { }
   # width: 480
   # height: 270
 
-# The number of images to capture.
+# The number of images to capture. Max: 99999
 total_images: 10
 
 # The interval between captures (in seconds).
