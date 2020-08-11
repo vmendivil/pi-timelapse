@@ -72,7 +72,7 @@ def capture_image():
         # Set a timer to take another picture at the proper interval after this picture is taken
         if (image_number < (config['total_images'])):
             # Sleep and call "new" thread
-            thread = threading.Timer(config['interval'], capture_image).start()
+            thread = threading.Timer(config['interval'], capture_image).start() # TODO: This generates new thread?
 
             # Update counter
             image_number += 1
@@ -87,7 +87,7 @@ def capture_image():
             # Capture a picture.
             camera.capture(dir + '/image-{0:05d}.jpg'.format(image_number))
             camera.close()
-        else:
+        else: # TODO: Fix the fact of possible multiple threads and move below code at the end of the file
             print '\nTime-lapse capture complete!\n'
             # TODO: This doesn't pop user into the except block below :(.
             create_timelapse_media()
@@ -107,4 +107,5 @@ dir = os.path.join(
 print '\nTime-lapse capture started!\n'
 
 create_timestamped_dir(dir)
+# TODO: Add Autofocus functionality
 capture_image()
