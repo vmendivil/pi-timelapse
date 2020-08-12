@@ -54,8 +54,7 @@ def autoadjustfocus():
 	focal_distance = 10
 	
 	while True:
-		print("max index = %d, max value = %lf, dec count = %d, last value = %lf" % (max_index, max_value, dec_count, last_value))
-	    #Adjust focus
+		#Adjust focus
 		focusing(focal_distance)
 		#Take image and calculate image clarity
 		val = calculation(camera)
@@ -78,6 +77,8 @@ def autoadjustfocus():
 		focal_distance += 10
 		if focal_distance > 1000:
 			break
+
+		print("max index = %d, max value = %lf, dec count = %d" % (max_index, max_value, dec_count))
 
     #Adjust focus to the best
 	focusing(max_index)
