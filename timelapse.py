@@ -6,6 +6,7 @@ import threading
 from datetime import datetime
 from time import sleep
 import yaml
+import autofocus
 
 config = yaml.safe_load(open(os.path.join(sys.path[0], "config.yml")))
 image_number = 0
@@ -26,7 +27,7 @@ def set_camera_options(camera):
             config['resolution']['width'],
             config['resolution']['height']
         )
-
+    
     # Set ISO.
     if config['iso']:
         camera.iso = config['iso']
@@ -107,5 +108,5 @@ dir = os.path.join(
 print '\nTime-lapse capture started!\n'
 
 create_timestamped_dir(dir)
-# TODO: Add Autofocus functionality
+autofocus.autoadjustfocus()
 capture_image()

@@ -10,7 +10,8 @@ try:
 	from picamera.array import PiRGBArray
 except:
 	sys.exit(0)
-	
+
+
 def focusing(val):
 	value = (val << 4) & 0x3ff0
 	data1 = (value >> 8) & 0x3f
@@ -30,19 +31,19 @@ def laplacian(img):
 
 def calculation(camera):
 	rawCapture = PiRGBArray(camera) 
-	camera.capture(rawCapture,format="bgr", use_video_port=True)
+	camera.capture(rawCapture, format="bgr", use_video_port=True)
 	image = rawCapture.array
 	rawCapture.truncate(0)
 	return laplacian(image)
 	
 	
-if __name__ == "__main__":
+def autoadjustfocus():
     #open camera
 	camera = picamera.PiCamera()
 	#open camera preview
 	camera.start_preview()
-	#set camera resolution to 640x480(Small resolution for faster speeds.)
-	camera.resolution = (640, 480)
+	#set camera resolution
+	camera.resolution = (1920, 1080)
 
 	print("Start focusing")
 	
@@ -53,6 +54,7 @@ if __name__ == "__main__":
 	focal_distance = 10
 	
 	while True:
+		print("max index = %d, max value = %lf, dec count = %d, last value = %lf" % (max_index, max_value, dec_count, last_value))
 	    #Adjust focus
 		focusing(focal_distance)
 		#Take image and calculate image clarity
@@ -79,16 +81,14 @@ if __name__ == "__main__":
 
     #Adjust focus to the best
 	focusing(max_index)
+	
 	time.sleep(1)
-	#set camera resolution to 2592x1944
-	camera.resolution = (2592,1944)
-	#save image to file.
-	#camera.capture("test.jpg")
-	print("max index = %d,max value = %lf" % (max_index,max_value))
-	#while True:
-	#	time.sleep(1)
+	print("max index = %d, max value = %lf" % (max_index, max_value))
 		
 	camera.stop_preview()
 	camera.close()
+
+	print("Focusing completed\n")
 		
-	
+#if __name__ == "__main__":
+#	autoadjustfocus()
