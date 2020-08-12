@@ -43,7 +43,7 @@ def autoadjustfocus():
 	#open camera preview
 	camera.start_preview()
 	#set camera resolution
-	camera.resolution = (1920, 1080)
+	camera.resolution = (1920, 1088)
 
 	print("Start focusing")
 	
