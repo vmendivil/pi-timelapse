@@ -43,7 +43,13 @@ def autoadjustfocus():
 	#open camera preview
 	camera.start_preview()
 	#set camera resolution
-	camera.resolution = (1920, 1088)
+	# Ratio: 16:9
+	# Max resolution for focusing: 1920x1088
+	# Resolutions: 
+	# 	1920x1080
+	#	2560x1440
+	# Faster processing: 640*360
+	camera.resolution = (640, 360)
 
 	print("Start focusing")
 	
@@ -76,20 +82,21 @@ def autoadjustfocus():
 		#Increase the focal distance
 		focal_distance += 10
 		if focal_distance > 1000:
+			print("\nFocus not properly adjusted, validate and try again...\n")
 			break
 
-		print("max index = %d, max value = %lf, dec count = %d" % (max_index, max_value, dec_count))
+		print("focal dist = %d, max index = %d, max value = %lf, dec count = %d" % (focal_distance, max_index, max_value, dec_count))
 
     #Adjust focus to the best
 	focusing(max_index)
 	
 	time.sleep(1)
-	print("max index = %d, max value = %lf" % (max_index, max_value))
+	print("focal dist = %d, max index = %d, max value = %lf" % (focal_distance, max_index, max_value))
 		
 	camera.stop_preview()
 	camera.close()
 
 	print("Focusing completed\n")
 		
-#if __name__ == "__main__":
-#	autoadjustfocus()
+if __name__ == "__main__":
+	autoadjustfocus()

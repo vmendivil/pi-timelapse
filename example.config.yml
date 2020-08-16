@@ -5,8 +5,8 @@
 
 # Image resolution Set to empty object (`{ }`) to use default resolution.
 resolution: { }
-  # width: 480
-  # height: 270
+  # width: 1920
+  # height: 1080
 
 # The number of images to capture. Max: 99999
 total_images: 10

@@ -11,13 +11,13 @@ from http import server
 
 PAGE="""\
 <html>
-<head>
-<title>picamera MJPEG streaming demo</title>
-</head>
-<body>
-<h1>PiCamera MJPEG Streaming Demo</h1>
-<img src="stream.mjpg" width="640" height="480" />
-</body>
+    <head>
+        <title>picamera MJPEG streaming demo</title>
+    </head>
+    <body>
+        <h1>PiCamera MJPEG Streaming Demo</h1>
+        <img src="stream.mjpg" width="640" height="360" />
+    </body>
 </html>
 """
 
@@ -81,11 +81,12 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
-with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
+with picamera.PiCamera(resolution='640x360', framerate=24) as camera:
+    print("Web server created on port 80")
     output = StreamingOutput()
     camera.start_recording(output, format='mjpeg')
     try:
-        address = ('', 8000)
+        address = ('', 80)
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
     finally:
