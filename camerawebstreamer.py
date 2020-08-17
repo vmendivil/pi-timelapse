@@ -2,12 +2,21 @@ import io
 import picamera
 import logging
 import socketserver
+import socket
 from threading import Condition
 from http import server
+import yaml
+import os
+import sys
 
 # https://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
 # http://your-pi-address:8000/
 # Run with python3
+
+config = yaml.safe_load(open(os.path.join(sys.path[0], "config.yml")))
+width = 640 # config['resolution']['width']
+height = 360 # config['resolution']['height']
+port = config['port']
 
 PAGE="""\
 <html>
@@ -16,10 +25,10 @@ PAGE="""\
     </head>
     <body>
         <h1>PiCamera MJPEG Streaming Demo</h1>
-        <img src="stream.mjpg" width="640" height="360" />
+        <img src="stream.mjpg" width="%d" height="%d" />
     </body>
 </html>
-"""
+""" % (width, height)
 
 class StreamingOutput(object):
     def __init__(self):
@@ -81,12 +90,24 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
-with picamera.PiCamera(resolution='640x360', framerate=24) as camera:
-    print("Web server created on port 80")
+def get_host_name_IP(port): 
+    try: 
+        host_name = socket.gethostname() 
+        host_ip = socket.gethostbyname(host_name)
+        print("Hostname :  ", host_name) 
+        print("IP : ", host_ip)
+    except: 
+        print("Unable to get Hostname and IP")
+    finally:
+        print("Web server created on port ", port)
+
+resolution = '%dx%d' % (width, height)
+with picamera.PiCamera(resolution=resolution, framerate=24) as camera:
     output = StreamingOutput()
     camera.start_recording(output, format='mjpeg')
     try:
-        address = ('', 80)
+        address = ('', port)
+        get_host_name_IP(port)
         server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
     finally:

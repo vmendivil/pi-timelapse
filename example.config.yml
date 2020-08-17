@@ -3,6 +3,9 @@
 # Basic Settings #
 ##################
 
+# Web configuration
+port: 80
+
 # Image resolution Set to empty object (`{ }`) to use default resolution.
 resolution: { }
   # width: 1920

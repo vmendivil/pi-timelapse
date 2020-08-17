@@ -48,7 +48,7 @@ def autoadjustfocus():
 	# Resolutions: 
 	# 	1920x1080
 	#	2560x1440
-	# Faster processing: 640*360
+	# Faster processing: 640x360
 	camera.resolution = (640, 360)
 
 	print("Start focusing")
