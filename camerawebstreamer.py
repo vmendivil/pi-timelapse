@@ -104,6 +104,7 @@ def get_host_name_IP(port):
 resolution = '%dx%d' % (width, height)
 with picamera.PiCamera(resolution=resolution, framerate=24) as camera:
     output = StreamingOutput()
+    camera.rotation = config['rotation']
     camera.start_recording(output, format='mjpeg')
     try:
         address = ('', port)
