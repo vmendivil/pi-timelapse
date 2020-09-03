@@ -7,21 +7,30 @@
 port: 80
 
 # Image resolution Set to empty object (`{ }`) to use default resolution.
+# Resolutions: 
+#   Ratio: 16:9
+#     1920x1080
+#     2560x1440
+#     640x360
 resolution: { }
-  # width: 1920
-  # height: 1080
+  # width: 2560
+  # height: 1440
 
 # The number of images to capture. Max: 99999
 total_images: 10
 
 # The interval between captures (in seconds).
-interval: 1
+interval: 2
 
-# Whether to create an animated gif after capturing the time-lapse images.
-create_gif: False
+# Enable taking pictures only within specific hours
+enableTimeframe: False
+waitingPeriod: 600 # seconds
 
-# Whether to create an video after capturing the time-lapse images.
-create_video: False
+# Format must be 24 hrs
+startHour: 6
+startMinute: 30
+endHour: 20
+endMinute: 30
 
 #####################
 # Advanced settings #
@@ -40,3 +49,13 @@ white_balance: { }
 
 # Rotate the images taken by the camera. Possible value are 0, 90, 180 or 270
 rotation: 0
+
+#####################
+# Media control #
+#####################
+
+# Whether to create an animated gif after capturing the time-lapse images.
+create_gif: False
+
+# Whether to create an video after capturing the time-lapse images.
+create_video: False
